@@ -1,17 +1,15 @@
 use clap::Parser;
 use config::App;
 use fuser::Session;
+use log;
 use opendal::Operator;
+use std::process::ExitCode;
 use tap::{Pipe, Tap};
 use tokio::{
-    runtime::{self, Runtime},
+    runtime,
     signal::unix::{signal, SignalKind},
     task::spawn_blocking,
 };
-
-use std::process::ExitCode;
-
-use log;
 
 mod config;
 mod dalfs;
@@ -25,7 +23,8 @@ fn main() -> ExitCode {
         .enable_io()
         .build()
         .expect("failed to build tokio runtime")
-        .block_on(run(config)) {
+        .block_on(run(config))
+    {
         log::error!("{e}");
         return ExitCode::FAILURE;
     }
