@@ -1,7 +1,7 @@
 use clap::Parser;
 use config::App;
 use fuser::Session;
-use log;
+
 use opendal::Operator;
 use std::process::ExitCode;
 use tap::{Pipe, Tap};
